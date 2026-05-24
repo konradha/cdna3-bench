@@ -1,0 +1,4 @@
+# Each `pmc:` line is one collection pass (HW counter slots are limited).
+pmc: GRBM_GUI_ACTIVE SQ_WAVES SQ_INSTS_VALU SQ_INSTS_MFMA
+pmc: SQ_INSTS_LDS SQ_INSTS_VMEM SQ_INSTS_SALU SQ_INSTS_SMEM
+pmc: TCC_HIT_sum TCC_MISS_sum TCP_TCC_READ_REQ_sum TCP_TCC_WRITE_REQ_sum
