@@ -1,4 +1,4 @@
-// LDS-staged B + sched_group_barrier hints to overlap dequant/global-load with MFMA.
+// C: B + sched_group_barrier hints.
 
 #include "bf16_gemm.h"
 

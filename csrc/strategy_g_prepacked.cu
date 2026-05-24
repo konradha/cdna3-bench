@@ -1,6 +1,4 @@
-// G: 128M x 128N x 64K, 8 waves at 4x2, D's geometry + prepacked B for linear-coalesced HBM reads.
-// B_prep layout: [n_tile_idx, chunk_idx (= K_byte/4), n_in_tile, 4 bytes].
-// Per CTA per k_outer iter -> 8 contiguous chunks x 128 ni x 4 bytes = 4096 bytes linear in HBM.
+// G: D geometry + prepacked B layout for linear-coalesced HBM reads.
 
 #include "bf16_gemm.h"
 

@@ -1,9 +1,4 @@
-// K: H (SW-scaled MXFP4) + explicit sched_group_barrier choreography.
-// Inserts AMDGPU instruction-class barriers per CK's flatmm pipeline pattern:
-//   per MFMA group  -> SGB_DS_READ (6) + SGB_MFMA (8)  prefetch operands, then issue MFMA
-//   per prefetch    -> SGB_VMEM_READ + SGB_VALU + SGB_DS_WRITE  partition next-iter staging
-//   per scale apply -> SGB_VMEM_READ + SGB_VALU  scale fetch and post-MFMA multiply
-// Mirrors AITER's _is_gfx942 branch (preshuffle_gemm.py:1355) for CDNA3.
+// K: H + sched_group_barrier choreography.
 
 #include "bf16_gemm.h"
 #include "strategy_h_dequant.h"

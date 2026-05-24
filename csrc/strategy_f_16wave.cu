@@ -1,6 +1,4 @@
-// F: 256M x 128N x 64K, 16 waves at 8x2. Single-buf A (32 KiB) + double-buf B (32 KiB) = 64 KiB.
-// 1 CTA/CU, 16 waves/CU. B-tile reused across 256 M rows (2x D).
-// Pipeline: A reloaded once per k_outer; B[buf^1] dequant overlaps MFMA on B[buf].
+// F: 256M x 128N x 64K, 16 waves at 8x2. Single-buf A + double-buf B = 64 KiB LDS.
 
 #include "bf16_gemm.h"
 

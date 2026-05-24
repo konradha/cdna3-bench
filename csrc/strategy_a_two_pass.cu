@@ -1,4 +1,4 @@
-// Two-pass: dequant B to HBM bf16 scratch, then plain bf16 MFMA gemm. Zero overlap.
+// A: two-pass. Dequant B -> HBM bf16 scratch, then bf16 GEMM.
 
 #include "bf16_gemm.h"
 
@@ -97,7 +97,7 @@ hipError_t launch_strategy_a(const void* A_bf16, const uint8_t* B_packed_fp4,
 
   void* B_bf16_raw = nullptr;
   const size_t bf16_bytes = static_cast<size_t>(K) * N * sizeof(uint16_t);
-  hipError_t e = hipMallocAsync(&B_bf16_raw, bf16_bytes, stream);
+  hipError_t e = hipMalloc(&B_bf16_raw, bf16_bytes);
   if (e != hipSuccess) return e;
 
   dim3 d_grid((N + 127) / 128, K / MX_GROUP_SIZE, 1);
@@ -111,8 +111,8 @@ hipError_t launch_strategy_a(const void* A_bf16, const uint8_t* B_packed_fp4,
   bf16_gemm_kernel<<<g_grid, g_block, 0, stream>>>(
       static_cast<const bf16*>(A_bf16), static_cast<const bf16*>(B_bf16_raw), C, M, N, K, num_xcds);
 
-  hipError_t free_err = hipFreeAsync(B_bf16_raw, stream);
   hipError_t last = hipGetLastError();
+  hipError_t free_err = hipFree(B_bf16_raw);
   return (last != hipSuccess) ? last : free_err;
 }
 

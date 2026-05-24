@@ -1,9 +1,4 @@
-// H: SW-scaled MXFP4. Dequant B to LDS as unscaled BF16 magnitudes; per scale-group accumulate
-// MFMA into a partial[2][4] FP32 tile; apply E8M0 scale per output column post-MFMA, sum into
-// total[2][4]. Mathematically identical to per-element scaling, removes per-element FP32 cvt /
-// BF16 RNE / fmul from dequant path. Mirrors CDNA4 v_mfma_scale_* semantics in software.
-//
-// Geometry = D (128M x 128N x 64K, 8 waves at 4x2). VGPR pressure: total + partial = 64 fp32/lane.
+// H: SW-scaled MXFP4. Accumulate unscaled MFMA into FP32 partial, apply E8M0 scale post-MFMA.
 
 #include "bf16_gemm.h"
 #include "strategy_h_dequant.h"

@@ -16,7 +16,7 @@ constexpr int SC_BLOCK_K = 64;
 constexpr int SC_WAVES = 4;
 constexpr int SC_MFMA_M = 16;
 constexpr int SC_MFMA_N = 16;
-constexpr int SC_MFMA_K = 16;  // gfx942: v_mfma_f32_16x16x16_bf16_1k
+constexpr int SC_MFMA_K = 16;
 
 // D: 128M x 128N x 64K, 8 waves at 4x2 -> 1 CTA/CU, 8 waves/CU.
 constexpr int D_BLOCK_M = 128;
@@ -29,14 +29,12 @@ constexpr int E_BLOCK_M = 128;
 constexpr int E_BLOCK_N = 64;
 constexpr int E_BLOCK_K = 64;
 
-// F: 256M x 128N x 64K, 16 waves at 8x2. Single-buf A (32 KiB), double-buf B (32 KiB).
-// B-tile reused across 256 M rows = 2x D's reuse; 16 waves/CU -> highest MFMA density target.
+// F: 256M x 128N x 64K, 16 waves at 8x2. Single-buf A + double-buf B.
 constexpr int F_BLOCK_M = 256;
 constexpr int F_BLOCK_N = 128;
 constexpr int F_BLOCK_K = 64;
 
-// G: 128M x 128N x 64K, 8 waves at 4x2. Same geometry as D but consumes a prepacked B layout
-// [n_tile_idx, chunk_idx, n_in_tile, byte] so each CTA reads a contiguous HBM range per k_outer.
+// G: D geometry + prepacked B layout (contiguous HBM per CTA).
 constexpr int G_BLOCK_M = 128;
 constexpr int G_BLOCK_N = 128;
 constexpr int G_BLOCK_K = 64;

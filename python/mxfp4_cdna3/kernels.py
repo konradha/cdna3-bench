@@ -1,11 +1,11 @@
-import torch  # noqa: F401  preloads libc10/libtorch_hip so _C.so's DT_NEEDED resolves
+import torch  # noqa: F401
 
 try:
     from . import _C as _ext
 except ImportError as e:
     raise RuntimeError("mxfp4_cdna3._C not built; run `pip install -e .`") from e
 
-from .ref import prepack_b_mxfp4  # noqa: F401  re-export for callers
+from .ref import prepack_b_mxfp4  # noqa: F401
 
 
 def device_info(dev_id=0):
@@ -57,14 +57,10 @@ def gemm_f(A, B_packed, B_scales, C=None):
 
 
 def gemm_g(A, B_prep, Bs_prep, C=None):
-    # B_prep / Bs_prep must come from prepack_b_mxfp4 (raw [K/2, N] does NOT work).
     return _ext.gemm_g(A, B_prep, Bs_prep, C)
 
 
 def gemm_auto(A, B_packed, B_scales, C=None):
-    # Shape-aware dispatch. J is the production synthesis (SW-scaled MXFP4 + LDS swizzle
-    # + sched_group_barrier choreography); falls back to F for shapes only F covers,
-    # then E for low-CTA grids, then C/B as last resort.
     M, K = A.shape
     N = B_packed.shape[1]
     if shape_supported_d(M, N, K):

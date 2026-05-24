@@ -1,4 +1,4 @@
-// Single kernel, full B-tile dequant into LDS each k-outer; MFMA reads from LDS. Double-buffered.
+// B: single-kernel LDS-staged dequant + MFMA, double-buffered.
 
 #include "bf16_gemm.h"
 

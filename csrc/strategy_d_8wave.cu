@@ -1,4 +1,4 @@
-// 8-wave 128M x 128N x 64K LDS-staged fused dequant GEMM. B dequant reused across 2x M wave-rows.
+// D: 128M x 128N x 64K, 8 waves at 4x2. Foundation geometry.
 
 #include "bf16_gemm.h"
 

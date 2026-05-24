@@ -79,8 +79,6 @@ def ref_gemm(A_bf16, B_packed, B_scales):
 
 
 def preshuffle_b(B_packed, B_scales, N_tile=128, K_tile=128):
-    # Strategies A/B/C consume raw packed bytes directly; no shuffle needed.
-    # Kept for API stability with bench/validate. Returns C-contiguous copies.
     return np.ascontiguousarray(B_packed), np.ascontiguousarray(B_scales)
 
 

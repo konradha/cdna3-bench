@@ -1,5 +1,4 @@
-// E: 128M x 64N x 64K, 4 waves M-stacked. Double-buffered LDS = 48 KiB, 1 CTA/CU, 4 waves/CU.
-// Coverage for low-CTA grids where D's 128x128 tile under-occupies on small N.
+// E: 128M x 64N x 64K, 4 waves M-stacked.
 
 #include "bf16_gemm.h"
 

@@ -1,7 +1,4 @@
-// I: H + XOR-16 LDS bank-conflict swizzle. Same LDS budget as H (64 KiB / 1 CTA-per-CU).
-// CDNA3 LDS = 32 banks x 4 bytes; row stride 64 bf16 = 128 bytes = every row starts at the same
-// bank. 16 lanes reading same col across 16 rows -> 16-way conflict on MFMA B-operand load.
-// XOR pattern col ^= ((row & 0xF) << 1) shifts the bank offset per row at zero LDS-budget cost.
+// I: H + XOR-16 LDS swizzle (col ^= ((row & 0xF) << 1)).
 
 #include "bf16_gemm.h"
 #include "strategy_h_dequant.h"
