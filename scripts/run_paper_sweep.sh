@@ -27,7 +27,7 @@ echo "==== PMC at production shape 4096x11008x4096 (H I K J M) ===="
 for s in h i k j m; do
   bash "$ROOT/scripts/profile_v1.sh" "$s" 4096 11008 4096 100 || true
 done
-python -m mxfp4_cdna3.profile_summary prof_out > results/pmc_summary.txt 2>&1 || true
+python -m mxfp4_cdna3.profile_summary --root prof_out > results/pmc_summary.txt 2>&1 || true
 
 echo "==== headline tables ===="
 python - <<'PY' | tee results/headline.txt

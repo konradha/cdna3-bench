@@ -7,3 +7,4 @@ dist/
 .ruff_cache/
 results/
 *.tmp
+.DS_Store
