@@ -1,0 +1,15 @@
+Strategy | Description                       | TFLOPS | % of Petit
+---------+-----------------------------------+--------+-----------
+   A     | two-pass: HBM BF16 scratch        |   17.2 |     46%
+   B     | LDS-staged fused                  |   36.3 |     98%
+   C     | B + sched_group_barrier           |   36.6 |     99%
+   D     | 128×128×64, 8 waves               |   44.4 |    120%
+   E     | 128×64×64 M-stacked (low-CTA)     |   27.7 |     75%
+   F     | 256×128×64, 16 waves              |   50.3 |    136%
+   G     | D + prepacked B (Marlin)          |   49.0 |    132%
+   H     | SW-scaled MFMA                    |   43.5 |    118%
+   I     | H + XOR-16 LDS swizzle            |   88.4 |    239%
+   J     | I + sched_group_barrier           |   86.7 |    234%
+   K     | H + sched_group_barrier           |   43.1 |    116%
+   M     | J + s_setprio asm                 |   72.2 |    195%
+ Petit   | published baseline (mul_mxfp4_a16)|   37.0 |   100%
